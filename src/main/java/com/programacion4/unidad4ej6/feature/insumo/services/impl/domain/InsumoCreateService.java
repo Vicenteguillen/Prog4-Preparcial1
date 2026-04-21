@@ -28,22 +28,19 @@ public class InsumoCreateService implements IInsumoCreateService {
     
     @Override
     public InsumoResponseDTO createInsumo(InsumoCreateDTO dto) {
-
-        if (insumoExistsByCodigoInternoService.existsByCodigoInterno(dto.getCodigoInterno())) {
-            throw new ConflictException("El código interno ya esta registrado");
-        }
-
-        Insumo insumo = toEntity(dto);
-
-        HistorialPrecio historialPrecio = HistorialPrecioMapper.toEntity(dto.getPrecio(), insumo);
-
-        insumo.getHistorialPrecios().add(historialPrecio);
-
-        // Gracias a CascadeType.ALL, JPA detecta que hay un 'primerPrecio' nuevo y lo guarda.
-        Insumo insumoGuardado = insumoRepository.save(insumo);
-
-        return InsumoMapper.toResponseDTO(insumoGuardado);
+    if (insumoExistsByCodigoInternoService.existsByCodigoInterno(dto.getCodigoInterno())) {
+        throw new ConflictException("El código interno ya esta registrado");
     }
+
+    // Se delega la creación de la entidad al Mapper
+    Insumo insumo = InsumoMapper.toEntity(dto); 
+    
+    HistorialPrecio historialPrecio = HistorialPrecioMapper.toEntity(dto.getPrecio(), insumo);
+    insumo.getHistorialPrecios().add(historialPrecio);
+
+    Insumo insumoGuardado = insumoRepository.save(insumo);
+    return InsumoMapper.toResponseDTO(insumoGuardado);
+}
 
     public Insumo toEntity(InsumoCreateDTO insumoCreateDTO) {
         return Insumo.builder()

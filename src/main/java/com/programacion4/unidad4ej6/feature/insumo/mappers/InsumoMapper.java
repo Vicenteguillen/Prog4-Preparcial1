@@ -1,20 +1,19 @@
 package com.programacion4.unidad4ej6.feature.insumo.mappers;
 
 import java.math.BigDecimal;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 import com.programacion4.unidad4ej6.feature.insumo.models.HistorialPrecio;
 import com.programacion4.unidad4ej6.feature.insumo.models.Insumo;
 import com.programacion4.unidad4ej6.feature.insumo.models.MovimientoStock;
 import com.programacion4.unidad4ej6.feature.insumo.dtos.response.InsumoResponseDTO;
-
-import java.util.stream.Collectors;
-import java.util.ArrayList;
-
 import com.programacion4.unidad4ej6.feature.insumo.dtos.request.InsumoCreateDTO;
 import com.programacion4.unidad4ej6.feature.insumo.dtos.response.HistorialPrecioResponseDTO;
 
 public class InsumoMapper {
     
+    // Método para pasar de Entidad a DTO (ya lo tenías)
     public static InsumoResponseDTO toResponseDTO(Insumo insumo) {
         return InsumoResponseDTO.builder()
                 .id(insumo.getId())
@@ -35,4 +34,15 @@ public class InsumoMapper {
                 .build();
     }
 
+    // NUEVO MÉTODO: Para pasar de DTO a Entidad (Fase B)
+    public static Insumo toEntity(InsumoCreateDTO dto) {
+        return Insumo.builder()
+                .nombre(dto.getNombre())
+                .codigoInterno(dto.getCodigoInterno())
+                .stockActual(0L) // Inicializamos stock en 0
+                .activo(true)    // El insumo nace activo
+                .historialPrecios(new ArrayList<HistorialPrecio>())
+                .movimientosStock(new ArrayList<MovimientoStock>())
+                .build();
+    }
 }
