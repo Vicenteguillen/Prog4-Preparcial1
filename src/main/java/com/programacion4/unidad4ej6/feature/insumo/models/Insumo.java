@@ -2,6 +2,7 @@ package com.programacion4.unidad4ej6.feature.insumo.models;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects; // Importante para el equals manual
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
@@ -13,13 +14,15 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter; 
+import lombok.Setter; 
 import lombok.NoArgsConstructor;
 import lombok.Builder;
 
 @Entity
 @Table(name = "insumos")
-@Data
+@Getter 
+@Setter 
 @NoArgsConstructor 
 @AllArgsConstructor
 @Builder
@@ -36,11 +39,11 @@ public class Insumo {
 
     @Column(nullable = false)
     @Builder.Default
-    private Long stockActual = Long.valueOf(0);
+    private Long stockActual = 0L;
 
     @Column(nullable = false)
     @Builder.Default
-    private Boolean activo = Boolean.TRUE;
+    private Boolean activo = true;
 
     @OneToMany(mappedBy = "insumo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
@@ -52,5 +55,18 @@ public class Insumo {
 
     public void changeStatus() {
         this.activo = !this.activo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Insumo insumo = (Insumo) o;
+        return Objects.equals(id, insumo.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

@@ -1,33 +1,23 @@
-package com.programacion4.unidad4ej6.feature.insumo.controllers.delete;
+package com.programacion4.unidad4ej6.feature.insumo.controllers.get;
 
+import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.programacion4.unidad4ej6.config.BaseResponse;
 import com.programacion4.unidad4ej6.feature.insumo.dtos.response.InsumoResponseDTO;
 import com.programacion4.unidad4ej6.feature.insumo.services.interfaces.domain.IInsumoGetService;
-import com.programacion4.unidad4ej6.config.BaseResponse;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/insumos")
-@AllArgsConstructor
+@RequestMapping("/api/v1/insumos")
+@RequiredArgsConstructor
 public class InsumoGetController {
-
     private final IInsumoGetService insumoGetService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<BaseResponse<InsumoResponseDTO>> getInsumo(
-        @PathVariable Long id
-    ) {
-        return ResponseEntity.status(HttpStatus.OK)
-        .body(BaseResponse.ok(
-            insumoGetService.getInsumo(id), 
-            "Insumo encontrado correctamente"
-        ));
-    }           
+    @GetMapping
+    public ResponseEntity<BaseResponse<List<InsumoResponseDTO>>> getAllInsumos() {
+        return ResponseEntity.ok(BaseResponse.ok(insumoGetService.getAllInsumos(), "Insumos listados correctamente"));
+    }
 }

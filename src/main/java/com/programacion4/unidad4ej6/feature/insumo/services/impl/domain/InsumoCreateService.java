@@ -32,7 +32,6 @@ public class InsumoCreateService implements IInsumoCreateService {
         throw new ConflictException("El código interno ya esta registrado");
     }
 
-    // Se delega la creación de la entidad al Mapper
     Insumo insumo = InsumoMapper.toEntity(dto); 
     
     HistorialPrecio historialPrecio = HistorialPrecioMapper.toEntity(dto.getPrecio(), insumo);

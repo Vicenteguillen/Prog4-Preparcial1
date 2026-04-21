@@ -26,15 +26,15 @@ public class InsumoCreateController {
 
     @PostMapping
     public ResponseEntity<BaseResponse<InsumoResponseDTO>> createInsumo(
-        @Valid @RequestBody InsumoCreateDTO dto
+    @Valid @RequestBody InsumoCreateDTO dto
     ) {
-        InsumoResponseDTO insumoResponseDTO = insumoCreateService.createInsumo(dto);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        .body(
-            BaseResponse.ok(
-                insumoResponseDTO, 
-                "Insumo creado correctamente"
-            )
-        );
-    }
+    InsumoResponseDTO insumoResponseDTO = insumoCreateService.createInsumo(dto);
+    return ResponseEntity.status(HttpStatus.CREATED) 
+    .body(
+        BaseResponse.ok(
+            insumoResponseDTO, 
+            "Insumo creado correctamente"
+        )
+    );
+}
 }
