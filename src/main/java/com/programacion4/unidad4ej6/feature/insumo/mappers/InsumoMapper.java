@@ -13,7 +13,6 @@ import com.programacion4.unidad4ej6.feature.insumo.dtos.response.HistorialPrecio
 
 public class InsumoMapper {
     
-    // Método para pasar de Entidad a DTO (ya lo tenías)
     public static InsumoResponseDTO toResponseDTO(Insumo insumo) {
         return InsumoResponseDTO.builder()
                 .id(insumo.getId())
@@ -34,7 +33,6 @@ public class InsumoMapper {
                 .build();
     }
 
-    // NUEVO MÉTODO: Para pasar de DTO a Entidad (Fase B)
     public static Insumo toEntity(InsumoCreateDTO dto) {
         return Insumo.builder()
                 .nombre(dto.getNombre())
